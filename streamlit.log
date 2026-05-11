@@ -1,0 +1,25 @@
+nohup: ignoring input
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+2026-05-11 20:27:08.744 Uvicorn server started on 0.0.0.0:8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.1.0.6:8501
+  External URL: http://43.138.129.161:8501
+
+2026-05-11 20:27:16.562 Uncaught app execution
+Traceback (most recent call last):
+  File "/home/ubuntu/AI_Agents/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             ^^^^^^
+  File "/home/ubuntu/AI_Agents/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/AI_Agents/team_chat.py", line 19, in <module>
+    for d in base_path.glob("/home/ubuntu/AI_Agents"):
+  File "/usr/lib/python3.12/pathlib.py", line 1092, in glob
+    raise NotImplementedError("Non-relative patterns are unsupported")
+NotImplementedError: Non-relative patterns are unsupported

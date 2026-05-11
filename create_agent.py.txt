@@ -1,0 +1,62 @@
+"""
+文件名：create_agent.py
+用法：python create_agent.py <agent名称> <岗位说明书文本文件路径>
+示例：python create_agent.py dianshang prompts_dianshang.txt
+"""
+
+import sys
+import shutil
+import os
+from pathlib import Path
+
+def main():
+    if len(sys.argv) != 3:
+        print("用法：python create_agent.py <agent英文名> <岗位说明书txt文件>")
+        print("示例：python create_agent.py dianshang my_prompts/dianshang_prompt.txt")
+        sys.exit(1)
+
+    agent_name = sys.argv[1]
+    prompt_file = sys.argv[2]
+
+    # 模板项目路径（你的自媒体Agent项目）
+    template_dir = Path(r"D:\AI_Agents\agent_media_project")
+
+    if not template_dir.exists():
+        print(f"模板项目不存在：{template_dir}")
+        sys.exit(1)
+
+    # 目标项目路径
+    target_dir = Path(r"D:\AI_Agents") / f"agent_{agent_name}_project"
+
+    if target_dir.exists():
+        print(f"目标项目 {target_dir} 已存在，请先删除或换个名字")
+        sys.exit(1)
+
+    # 复制整个模板项目
+    print(f"正在复制模板项目到 {target_dir} ...")
+    shutil.copytree(template_dir, target_dir)
+
+    # 删除 output 里的旧文件（保留目录）
+    output_dir = target_dir / "output"
+    for f in output_dir.iterdir():
+        if f.is_file():
+            f.unlink()
+    # 删除多余的 txt.txt 和 pycache 无关的遗留文件（如果有）
+    prompts_dir = target_dir / "prompts"
+    trash = prompts_dir / "media_expert.txt.txt"
+    if trash.exists():
+        trash.unlink()
+
+    # 替换岗位说明书
+    if not os.path.exists(prompt_file):
+        print(f"岗位说明书文件不存在：{prompt_file}")
+        sys.exit(1)
+
+    shutil.copy(prompt_file, prompts_dir / "media_expert.txt")
+    print(f"已将 {prompt_file} 复制为岗位说明书")
+
+    print(f"新Agent项目已就绪：{target_dir}")
+    print(f"验证：cd {target_dir} && python media_agent.py")
+
+if __name__ == "__main__":
+    main()
